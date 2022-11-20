@@ -4,7 +4,9 @@
   "description": "",
   "private": "true",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "webpack",
+    "watch": "jest --watch"
   },
   "repository": {
     "type": "git",
