@@ -8,9 +8,11 @@ const ships = (size) => {
     // Indicate the hit on the ship
     const hit = () =>  ++hits;
 
+    const getHits = () => hits;
+
     const isSunk = () =>  hits === size;
 
-    return { getLength, hit, isSunk }
+    return { getLength, hit, getHits, isSunk }
     
 }
 export default ships;
