@@ -7,7 +7,7 @@ class Gameboard {
         this.board = [];
         this.missedAttack = [];
         this.createBoard();
-        this.pieces = { carrier: 5, battleship: 4, destroyer: 3, submarine: 3, patrol: 2  }
+        this.ships = [];
     }
     // Create the game board 
     createBoard(){
@@ -24,19 +24,19 @@ class Gameboard {
         // Create a ship object and associate each of the square spanning the length of the ship with that object
         // first check if the placement is possible
 
-        // if (!this.isPlacementPossible(row, col, length, isVertical)) return;
+        if (!this.isPlacementPossible(length, isVertical, row, col)) return;
         const ship = ships(length);
+        this.ships.push(ship);
         if (isVertical){
             for (let i = row; i < (row + length); i++){
                 this.board[i][col] = ship;
             }
-            return this.board[row + (length - 1)][col] ;  //When doing DOM manipulation return board to be rendered
+            return this.board[row + (length - 1)][col] ;  // TODO: When doing DOM manipulation return board to be rendered
         }
         for (let j = col; j < (col + length); j++){
             this.board[row][j] = ship;
         }
         return this.board[row][col + (length - 1)];
-
 
     }
     isPlacementPossible(length, isVertical, row, col){
@@ -56,15 +56,32 @@ class Gameboard {
         }    
 
         // Any of the neighbor fields are taken
-
+        if (isVertical){
+            for (let i = row; i < (row + length); i++){
+                if (this.board[i][col] !== null) return false
+            }
+        }
+        else{
+            for (let j = col; j < (col + length); j++){
+                if(this.board[row][j] !== null) return false
+            }
+        }
+        return true;
     }
     isEmpty(){
 
     }
-
-
     receiveAttacks(row, col){
-
+        if (this.board[row][col] !== null){
+            this.board[row][col].hit()
+        }
+        else {
+            this.missedAttack[row][col] = true;
+        }
+        return this.board[row][col].getHits(); // TODO: return ship object to show the damage 
+    }
+    shipsSunk(){
+        return this.ships.every(ship => ship.isSunk());
     }
 }
 const gameboard = new Gameboard();
