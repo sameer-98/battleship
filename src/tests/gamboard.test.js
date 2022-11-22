@@ -18,3 +18,18 @@ test('Correct placement of ship objects', () => {
 test('Check whether the location is already occupied', () => {
     expect(gameboard.isPlacementPossible(4,true, 0,0)).toBe(false)
 });
+test('Check whether the location is going out of bounds horizontally', () => {
+    expect(gameboard.isPlacementPossible(4,false, 9,9)).toBe(false)
+});
+test('Check whether the location is going out of bounds vertically', () => {
+    expect(gameboard.isPlacementPossible(4,true, 9,9)).toBe(false)
+});
+test('Check whether the location is going out of bounds vertically', () => {
+    expect(gameboard.isPlacementPossible(4,true, 9,0)).toBe(false)
+});
+test('Check whether the location is occupied', () => {
+    expect(gameboard.isPlacementPossible(4,true, 0,9)).toBe(false)
+});
+test('Check whether the location is occupied', () => {
+    expect(gameboard.isPlacementPossible(4,false, 0,9)).toBe(false)
+});

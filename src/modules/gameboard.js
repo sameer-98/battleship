@@ -42,12 +42,15 @@ class Gameboard {
     isPlacementPossible(length, isVertical, row, col){
         
         // Check in the horizontal direction if going out of board
-        
-
+        if ((col < 0 || (col + (length - 1) > SIZE - 1) || (col > SIZE - 1)) && !isVertical){
+            return false
+        }
         // Check in the vertical direction if going out of board
-       
+       if (isVertical && (row < 0 || (row + (length - 1) > SIZE - 1) || (row > SIZE - 1))){
+        return false
+       }
       
-        // Any of the field is taken
+        // Any of the field is already taken
         if (this.board[row][col] !== null){
             return false
         }    
