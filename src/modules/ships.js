@@ -13,4 +13,5 @@ const ships = (size) => {
     return { getLength, hit, isSunk }
     
 }
+export default ships;
 module.exports = ships;
