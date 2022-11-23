@@ -20,23 +20,21 @@ class Gameboard {
             }
         }
     }
-    placeShips(length, isVertical, row, col){
+    placeShips(ship, length, isVertical, row, col){
         // Create a ship object and associate each of the square spanning the length of the ship with that object
         // first check if the placement is possible
 
-        if (!this.isPlacementPossible(length, isVertical, row, col)) return;
-        const ship = ships(length);
-        this.ships.push(ship);
+        if (!this.isPlacementPossible(length, isVertical, row, col)) return false;
         if (isVertical){
             for (let i = row; i < (row + length); i++){
                 this.board[i][col] = ship;
             }
-            return this.board[row + (length - 1)][col] ;  // TODO: When doing DOM manipulation return board to be rendered
+            return true  // TODO: When doing DOM manipulation return board to be rendered
         }
         for (let j = col; j < (col + length); j++){
             this.board[row][j] = ship;
         }
-        return this.board[row][col + (length - 1)];
+        return true;
 
     }
     isPlacementPossible(length, isVertical, row, col){
@@ -68,25 +66,46 @@ class Gameboard {
         }
         return true;
     }
-    isEmpty(){
-
-    }
-    receiveAttacks(row, col){
+    
+    receiveAttacks(row, col){   // Function returns true if the attack hits ship and false if doesn't
         if (this.board[row][col] !== null){
             this.board[row][col].hit()
+            return true;
         }
         else {
             this.missedAttack[row][col] = true;
         }
-        return this.board[row][col].getHits(); // TODO: return ship object to show the damage 
+        return false;
     }
-    shipsSunk(){
+    shipsSunk(){    // Function return true if all the ships on the board have sunk else false
         return this.ships.every(ship => ship.isSunk());
     }
+
+    placeShipsRandomly(){
+        const carrier = ships(5);
+        const battleship = ships(4);
+        const destroyer = ships(3);
+        const submarine = ships(3);
+        const patrol = ships(2);
+
+        this.ships.push(carrier, battleship, destroyer, submarine, patrol);
+
+        let isSuccessfulPlacement = 0;
+        while (isSuccessfulPlacement < 5){
+            const ship = this.ships[isSuccessfulPlacement];
+            let x = Math.floor((Math.random() * 10) + 1);
+            let y = Math.floor((Math.random() * 10) + 1);
+            let  length = ship.getLength();
+            let isVertical = (Math.round(Math.random()) === 0) ? false : true; // 0 -> false, 1 -> true
+            if (this.placeShips(ship, length, isVertical, x, y)){
+                isSuccessfulPlacement++;
+            } 
+        }
+        return this.board;
+    }
 }
-const gameboard = new Gameboard();
-gameboard.placeShips(5,true, 0, 0);
-gameboard.placeShips(5,false, 0, 5);
-gameboard.placeShips(3, true, 4, 4);
-console.table(gameboard.board);
+const playerBoard = new Gameboard();
+console.table(playerBoard.placeShipsRandomly());
+
+export default Gameboard;
 module.exports = Gameboard;
