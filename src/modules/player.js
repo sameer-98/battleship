@@ -5,17 +5,26 @@ const player = (name) => {
 
     const getName = () => name;
     
-    const board = new Gameboard();
+    const gameboard = new Gameboard();
 
     const attack = (enemy, row, col) => {       // returns undefined if already attacked at that position
         if (!attackPosition.has([row, col])){
             attackPosition.add([row, col]);
             return enemy.receiveAttacks(row, col);
         }
-    }                       
+    }
 
-    return { board, getName, attack };
+    const attackRandomly = (player) => {
+        let x = Math.floor((Math.random() * 10));
+        let y = Math.floor((Math.random() * 10));
+
+        let status = attack(player, x, y);
+        return { status, x, y}
+    }
+                          
+
+    return { gameboard, getName, attack, attackRandomly };
 }
 
 export default player
-module.exports = player
+//module.exports = player

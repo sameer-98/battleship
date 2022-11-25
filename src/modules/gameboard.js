@@ -40,15 +40,16 @@ class Gameboard {
     isPlacementPossible(length, isVertical, row, col){
         
         // Check in the horizontal direction if going out of board
-        if ((col < 0 || (col + (length - 1) > SIZE - 1) || (col > SIZE - 1)) && !isVertical){
-            return false
+        if ((col < 0 || (col + (length - 1) > SIZE - 1) || (col > SIZE - 1) || (row > SIZE - 1)) && !isVertical){
+            return false;
         }
         // Check in the vertical direction if going out of board
-       if (isVertical && (row < 0 || (row + (length - 1) > SIZE - 1) || (row > SIZE - 1))){
-        return false
-       }
+        if(isVertical && (row < 0 || (row + (length - 1) > SIZE - 1) || (row > SIZE - 1) || col > SIZE - 1)){
+            return false;
+        }
       
         // Any of the field is already taken
+        //console.log(row,col,length, isVertical);
         if (this.board[row][col] !== null){
             return false
         }    
@@ -93,8 +94,8 @@ class Gameboard {
         let isSuccessfulPlacement = 0;
         while (isSuccessfulPlacement < 5){
             const ship = this.ships[isSuccessfulPlacement];
-            let x = Math.floor((Math.random() * 10) + 1);
-            let y = Math.floor((Math.random() * 10) + 1);
+            let x = Math.floor((Math.random() * 10));
+            let y = Math.floor((Math.random() * 10));
             let  length = ship.getLength();
             let isVertical = (Math.round(Math.random()) === 0) ? false : true; // 0 -> false, 1 -> true
             if (this.placeShips(ship, length, isVertical, x, y)){
@@ -104,8 +105,8 @@ class Gameboard {
         return this.board;
     }
 }
-const playerBoard = new Gameboard();
-console.table(playerBoard.placeShipsRandomly());
+//const playerBoard = new Gameboard();
+//console.table(playerBoard.placeShipsRandomly());
 
 export default Gameboard;
-module.exports = Gameboard;
+//module.exports = Gameboard;

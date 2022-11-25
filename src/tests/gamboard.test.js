@@ -41,23 +41,23 @@ test('Correct placement of ship objects', () => {
 // });
 
 // Tests for receive attack function
-test('receive attack', () => {
-    expect(gameboard.receiveAttacks(0,0)).toBe(1)
-});
-test('receive attack', () => {
-    expect(gameboard.receiveAttacks(1,0)).toBe(2)
-});
-test('receive attack', () => {
-    expect(gameboard.receiveAttacks(2,0)).toBe(3)
-});
-test('receive attack', () => {
-    expect(gameboard.receiveAttacks(3,0)).toBe(4)
-});
-test('receive attack', () => {
-    expect(gameboard.receiveAttacks(4,0)).toBe(5)
-});
+// test('receive attack', () => {
+//     expect(gameboard.receiveAttacks(0,0)).toBe(true)
+// });
+// test('receive attack', () => {
+//     expect(gameboard.receiveAttacks(1,0)).toBe(true)
+// });
+// test('receive attack', () => {
+//     expect(gameboard.receiveAttacks(2,0)).toBe(true)
+// });
+// test('receive attack', () => {
+//     expect(gameboard.receiveAttacks(3,0)).toBe(true)
+// });
+// test('receive attack', () => {
+//     expect(gameboard.receiveAttacks(4,0)).toBe(true)
+// });
 
-// test whether all ships have sunk
-test('All ships sunk', () => {
-    expect(gameboard.shipsSunk()).toBe(true);
-})
+// // test whether all ships have sunk
+// test('All ships sunk', () => {
+//     expect(gameboard.shipsSunk()).toBe(true);
+// })

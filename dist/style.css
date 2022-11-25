@@ -9,7 +9,7 @@ body {
 }
 
 .btn-outline-primary:hover {
-    background-color: white !important;
+    background-color: rgba(0, 0, 0, 0) !important;
 }
 
 .blinking {
