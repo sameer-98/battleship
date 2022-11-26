@@ -4,6 +4,10 @@ const UI = () => {
 
     let hasAttacked = false;
 
+    const setHasAttack = (bool) => {
+        hasAttacked = bool;
+    }
+
     // helper function to create a square
     const createSquare = (row, col) => {
         const square = document.createElement('button');
@@ -33,13 +37,8 @@ const UI = () => {
                     square.addEventListener('click', (e) => {
                         let row = e.target.dataset.row;
                         let col = e.target.dataset.col;
-                        if (userBoard[row][col] === null){
-                            square.style.backgroundColor = 'red';
-                        }
-                        else{
-                            square.style.backgroundColor = 'green';
-                        }
-                        player.gameboard.receiveAttacks(row, col); // refractor code to remove redundant if stats, receiveAttacks already return true/false
+                        let attackSuccessful = player.gameboard.receiveAttacks(row, col); 
+                        (attackSuccessful) ? renderHit('player2', row, col) : renderMiss('player2', row, col);
                         square.style.pointerEvents = 'none';
                         hasAttacked = true;                     
                     });
@@ -49,16 +48,19 @@ const UI = () => {
             board.appendChild(row);
         }
         playerElement.appendChild(board);
-    
     }
     function renderMiss (id, row, col){
-
+        const player = document.getElementById(id);
+        const button = player.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+        button.style.backgroundColor = 'red';
     }
-    function renderHit(){
-
+    function renderHit(id, row, col){
+        const player = document.getElementById(id);
+        const button = player.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+        button.style.backgroundColor = 'green';
     }
     
 
-    return { renderBoard, hasAttacked, renderMiss, renderHit };
+    return { renderBoard, hasAttacked, renderMiss, renderHit, setHasAttack };
 }
 export default UI

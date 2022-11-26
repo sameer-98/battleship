@@ -13,22 +13,29 @@ const app = () => {
 
     console.table(board1);
     console.table(board2);
-    
-
 
     // render the boards
-    UI().renderBoard('player1',player1);
-    UI().renderBoard('player2',player2);
+    UI().renderBoard('player1', player1);
+    UI().renderBoard('player2', player2);
+   
+    console.log(UI().hasAttacked);
+    console.log(player1.gameboard.shipsSunk());
 
-    let nextPlayer = 0;
-    while (player1.gameboard.shipsSunk() || player2.gameboard.shipsSunk()){
-        const banner = document.querySelector('.blinking');
-        if (UI().hasAttacked === true){
-            banner.textContent = "PC's turn";
-            player2.attackRandomly(player1);
-        }
-    }
-
+    
+    
+    // while (player1.gameboard.shipsSunk() !== true || player2.gameboard.shipsSunk() !== true){
+    //         const banner = document.querySelector('.blinking');
+    //         banner.textContent = 'Your Turn!';
+    //         if (UI().hasAttacked === true){
+    //             banner.textContent = "PC's turn";
+    //             let attack = player2.attackRandomly(player1);
+                
+    //             (attack.status) ? UI().renderHit : UI('player1', attack.x, attack.y).renderMiss('player1', attack.x, attack.y);
+    //             UI().setHasAttack(true);
+    //             }
+    //         }
+    
+  
     
 }
 
