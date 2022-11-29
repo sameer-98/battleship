@@ -105,8 +105,6 @@ class Gameboard {
         return this.board;
     }
 }
-//const playerBoard = new Gameboard();
-//console.table(playerBoard.placeShipsRandomly());
 
 export default Gameboard;
 //module.exports = Gameboard;

@@ -7,18 +7,19 @@ const player = (name) => {
     
     const gameboard = new Gameboard();
 
-    const attack = (enemy, row, col) => {       // returns undefined if already attacked at that position
+    const attack = (row, col) => {       // returns undefined if already attacked at that position
         if (!attackPosition.has([row, col])){
             attackPosition.add([row, col]);
-            return enemy.receiveAttacks(row, col);
+            return gameboard.receiveAttacks(row, col);
         }
     }
 
-    const attackRandomly = (player) => {
+    const attackRandomly = () => {
+    
         let x = Math.floor((Math.random() * 10));
         let y = Math.floor((Math.random() * 10));
 
-        let status = attack(player, x, y);
+        let status = attack(x, y);
         return { status, x, y}
     }
                           

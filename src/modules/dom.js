@@ -1,12 +1,7 @@
+import app from "./app";
+
 const UI = () => {
-
     const SIZE = 10;
-
-    let hasAttacked = false;
-
-    const setHasAttack = (bool) => {
-        hasAttacked = bool;
-    }
 
     // helper function to create a square
     const createSquare = (row, col) => {
@@ -18,7 +13,7 @@ const UI = () => {
     }
 
     //create the game boards for each player
-    const renderBoard = (id, player) => {
+    const renderBoard = (id, player, players) => {
         const playerElement = document.getElementById(id);
         const userBoard = player.gameboard.board;
         const board = document.createElement('div');
@@ -37,10 +32,12 @@ const UI = () => {
                     square.addEventListener('click', (e) => {
                         let row = e.target.dataset.row;
                         let col = e.target.dataset.col;
+
                         let attackSuccessful = player.gameboard.receiveAttacks(row, col); 
-                        (attackSuccessful) ? renderHit('player2', row, col) : renderMiss('player2', row, col);
+                        (attackSuccessful) ? renderAttack('hit','player2', row, col) : renderAttack('miss','player2', row, col);
+                        
                         square.style.pointerEvents = 'none';
-                        hasAttacked = true;                     
+                        app().gameLoop(players);
                     });
                 }
                 row.appendChild(square);
@@ -49,18 +46,29 @@ const UI = () => {
         }
         playerElement.appendChild(board);
     }
-    function renderMiss (id, row, col){
+    function renderAttack(type, id, row, col){
         const player = document.getElementById(id);
         const button = player.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-        button.style.backgroundColor = 'red';
+        if (type === 'hit'){
+            button.style.backgroundColor = 'green';
+        }
+        else{
+            button.style.backgroundColor = 'red';
+        }
     }
-    function renderHit(id, row, col){
-        const player = document.getElementById(id);
-        const button = player.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-        button.style.backgroundColor = 'green';
+
+    function displayResult(player1, player2){
+        console.log(player1.getName(), player2.getName());
+        const result = document.querySelector('.result');
+        if (player1.gameboard.shipsSunk()){
+            result.textContent = `${player2.getName()} is the winner`;
+        }
+        else{
+            result.textContent = `${player1.getName()} is the winner`;
+        }
     }
     
 
-    return { renderBoard, hasAttacked, renderMiss, renderHit, setHasAttack };
+    return { renderBoard, renderAttack, displayResult };
 }
 export default UI

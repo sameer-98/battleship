@@ -1,3 +1,3 @@
 import app from "./modules/app";
 
-app();
+app().init();
